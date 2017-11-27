@@ -16,10 +16,11 @@ var seedDB = require("./models/seed.js");
 
 var campgroundRoutes = require("./routes/campgrounds");
 var commentRoutes = require("./routes/comments");
+var commandRoutes = require("./routes/command");
 var indexRoutes = require("./routes/index");
 
-// mongoose.connect("mongodb://localhost/yelp_camp");
-mongoose.connect("mongodb://sree2chin:password@ds117156.mlab.com:17156/vui");
+mongoose.connect("mongodb://localhost/vui");
+// mongoose.connect("mongodb://sree2chin:password@ds117156.mlab.com:17156/vui");
 
 // auth setup
 app.use(require("express-session")({
@@ -45,7 +46,7 @@ app.use(function(req, res, next){
 });
 // Middleware IMP end XXXX
 
-// seedDB(); // seed the database
+seedDB(); // seed the database
 
 // Campground.create(
 // 	{
@@ -79,6 +80,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(campgroundRoutes);
 app.use(commentRoutes);
+app.use(commandRoutes);
 app.use(indexRoutes);
 
 app.get("*", function(req, res) {

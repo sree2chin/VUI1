@@ -3,14 +3,15 @@
     <head>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <title>VUI</title>
 
         <script type="text/javascript">
             // create a div
             var createDefaultDiv = function(localArgs) {
                 var sDiv = document.createElement('div');
-                sDiv.setAttribute("style", "height: 200px; width: 100%; background-color: #eee;");
-                document.querySelector("#s-main-container").append(sDiv)
+                sDiv.setAttribute('style', 'height: 200px; background-color: #eee; padding: 5px; margin: 5px;');
+                document.querySelector('#s-main-inner-container').append(sDiv);
             }
 
             var sProcessInput = function() {
@@ -19,6 +20,20 @@
                     createDefaultDiv();
                 }
             }
+
+            // var processInputFromBackend = function() {
+            //     $.ajax({
+            //         url: "/getCommand", 
+            //         type: "GET",
+            //         async: true,
+            //         success: function(result){
+            //             debugger;
+            //         },
+            //         error: function(xhr,status,error) {
+            //             debugger;
+            //         }
+            //     });
+            // }
         </script>
 
         <style>
@@ -28,12 +43,14 @@
             }
             .s-bottom-container {
                 bottom: 0px;
-                position: absolute;
+                position: fixed;
                 text-align: center;
                 padding-bottom: 20px;
                 padding-top: 20px;
                 border-top: solid 1px #eee;
                 width: 100%;
+                background: white;
+                z-index: 5;
             }
             .s-process-textbox {
                 width: 80%;
@@ -58,16 +75,21 @@
     <div id = "s-main-container" class = "s-main-container">
 
         <h1>Create UI from VUI</h1>
+        <div id = "s-main-inner-container">
+        </div>
 
         <div id = "s-main-process-result">
 
         </div>
 
         <div class = "s-bottom-container">
-            <input class = "s-process-textbox" type = "text" id = "s-take-input"/>
-            <button onclick = "sProcessInput()"> 
-                Process
-            </button>
+            <form action="/getCommand" method="GET">
+                <input class = "s-process-textbox" name = "commandText" type = "text" id = "s-take-input"/>
+                <button type = "submit"> 
+                    Process
+                </button>
+            </form>
+            
         </div>
     </div>
     

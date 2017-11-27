@@ -1,20 +1,39 @@
 var mongoose = require("mongoose");
 var Campground = require("./campground");
 var Comment = require("./comment");
+var Command = require("./command");
 
 function seedDB() {
-	Campground.remove({}, function(err){
+	// Campground.remove({}, function(err){
+	// 	if(err) {
+	// 		console.log(err);
+	// 	} else {
+	// 		console.log("REMOVED campgrounds");
+	// 	}
+	// })
+	// Comment.remove({}, function(err){
+	// 	if(err) {
+	// 		console.log(err);
+	// 	} else {
+	// 		console.log("REMOVED comments");
+	// 	}
+	// })
+	Command.remove({}, function(err){
 		if(err) {
 			console.log(err);
 		} else {
-			console.log("REMOVED campgrounds");
+			console.log("REMOVED commands");
 		}
 	})
-	Comment.remove({}, function(err){
+
+	Command.create({
+		command: "creatediv", 
+		script: 'var sDiv = document.createElement("div"); sDiv.setAttribute("style", "height: 200px; background-color: #eee; padding: 5px; margin: 5px;");document.querySelector("#s-main-inner-container").append(sDiv);'
+	}, function(err, command){
 		if(err) {
 			console.log(err);
 		} else {
-			console.log("REMOVED comments");
+			console.log("added a command");
 		}
 	})
 	// //add new campgrounds
