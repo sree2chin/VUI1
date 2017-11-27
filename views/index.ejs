@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
+        <title>VUI</title>
+
+        <script type="text/javascript">
+            // create a div
+            var createDefaultDiv = function(localArgs) {
+                var sDiv = document.createElement('div');
+                sDiv.setAttribute("style", "height: 200px; width: 100%; background-color: #eee;");
+                document.querySelector("#s-main-container").append(sDiv)
+            }
+
+            var sProcessInput = function() {
+                var processText = document.querySelector("#s-take-input").value;
+                if(processText && processText.includes('create') && processText.includes('div')) {
+                    createDefaultDiv();
+                }
+            }
+        </script>
+
+        <style>
+            .s-main-container {
+                position: relative;
+                padding-bottom: 60px;
+            }
+            .s-bottom-container {
+                bottom: 0px;
+                position: absolute;
+                text-align: center;
+                padding-bottom: 20px;
+                padding-top: 20px;
+                border-top: solid 1px #eee;
+                width: 100%;
+            }
+            .s-process-textbox {
+                width: 80%;
+            }
+        </style>
+    </head>
+    <body>
+    
+    <div class="container">
+        <% if(error && error.length > 0){ %>
+            <div class="alert alert-danger" role="alert">
+                <%= error %>
+            </div>
+        <% } %>
+        <% if(success && success.length > 0){ %>
+            <div class="alert alert-success" role="alert">
+                <%= success %>
+            </div>
+        <% } %>
+    </div>
+    
+    <div id = "s-main-container" class = "s-main-container">
+
+        <h1>Create UI from VUI</h1>
+
+        <div id = "s-main-process-result">
+
+        </div>
+
+        <div class = "s-bottom-container">
+            <input class = "s-process-textbox" type = "text" id = "s-take-input"/>
+            <button onclick = "sProcessInput()"> 
+                Process
+            </button>
+        </div>
+    </div>
+    
+    
+
+<% include partials/footer %>
