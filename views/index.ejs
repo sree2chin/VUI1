@@ -8,35 +8,42 @@
 
         <script type="text/javascript">
             // create a div
-            var createDefaultDiv = function(localArgs) {
-                var sDiv = document.createElement('div');
-                sDiv.setAttribute('style', 'height: 200px; background-color: #eee; padding: 5px; margin: 5px;');
-                document.querySelector('#s-main-inner-container').append(sDiv);
-            }
-
-            var sProcessInput = function() {
-                var processText = document.querySelector("#s-take-input").value;
-                if(processText && processText.includes('create') && processText.includes('div')) {
-                    createDefaultDiv();
-                }
-            }
-
-            // var processInputFromBackend = function() {
-            //     $.ajax({
-            //         url: "/getCommand", 
-            //         type: "GET",
-            //         async: true,
-            //         success: function(result){
-            //             debugger;
-            //         },
-            //         error: function(xhr,status,error) {
-            //             debugger;
-            //         }
-            //     });
+            // var createDefaultDiv = function(localArgs) {
+            //     var sDiv = document.createElement('div');
+            //     sDiv.setAttribute('style', 'height: 200px; background-color: #eee; padding: 5px; margin: 5px;');
+            //     document.querySelector('#s-main-inner-container').append(sDiv);
             // }
+
+            // initial process func on client side
+            // var sProcessInput = function() {
+            //     var processText = document.querySelector("#s-take-input").value;
+            //     if(processText && processText.includes('create') && processText.includes('div')) {
+            //         createDefaultDiv();
+            //     }
+            // }
+            var counter = 0;
+
+            var processInputFromBackend = function() {
+                $.ajax({
+                    url: "/getCommand?commandText="+document.querySelector("#s-take-input").value+"&counter="+(++counter), 
+                    type: "GET",
+                    success: function(result){
+                        if(result.data && result.data.length) {
+                            eval(result.data);
+                        }
+                    },
+                    error: function(xhr,status,error) {
+                        console.log("something went wrong in processInputFromBackend", xhr, status, error);
+                    }
+                });
+            }
         </script>
 
         <style>
+            body {
+                box-sizing: border-box;
+                transition: all 0.2s linear;
+            }
             .s-main-container {
                 position: relative;
                 padding-bottom: 60px;
@@ -54,6 +61,11 @@
             }
             .s-process-textbox {
                 width: 80%;
+            }
+            .s-process-btn {
+                background: #6565ea;
+                color: white;
+                border-radius: 0px;
             }
         </style>
     </head>
@@ -74,7 +86,7 @@
     
     <div id = "s-main-container" class = "s-main-container">
 
-        <h1>Create UI from VUI</h1>
+        <h3 style = "text-align: center;">Create UI from VUI</h3>
         <div id = "s-main-inner-container">
         </div>
 
@@ -83,12 +95,11 @@
         </div>
 
         <div class = "s-bottom-container">
-            <form action="/getCommand" method="GET">
-                <input class = "s-process-textbox" name = "commandText" type = "text" id = "s-take-input"/>
-                <button type = "submit"> 
+
+                <input class = "s-process-textbox" type = "text" id = "s-take-input"/>
+                <button class = "s-process-btn" onclick = "processInputFromBackend()"> 
                     Process
                 </button>
-            </form>
             
         </div>
     </div>
